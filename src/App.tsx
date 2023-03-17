@@ -1,35 +1,78 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 
-function App() {
-  const [count, setCount] = useState(0)
+import React, {FC, useEffect, useState} from 'react';
+import Cookie from "./components/Cookie";
+import AutoClicker from "./components/AutoClicker";
+import autoClicker from "./components/AutoClicker";
+import AddAutoClicker from "./components/AddAutoClicker";
 
-  return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+const currentCookieKey = 'currentCookies';
+
+type AutoClickerObject = {
+    intervalTime: number,
+    valueToIncrease: number,
+    nameOfAutoClicker: string
 }
 
-export default App
+const starterObjects: AutoClickerObject[] = [{
+    intervalTime: 1000,
+    nameOfAutoClicker: 'fast normal clicker',
+    valueToIncrease: 1
+}, {
+    intervalTime: 1000,
+    nameOfAutoClicker: 'slow big clicker',
+    valueToIncrease: 5}]
+
+type App = {}
+const App: FC<App> = () => {
+    const [cookieCount, setCookieCount] = useState(getFromLocalStorage());
+    const [autoClickers, setAutoClickers] = useState<AutoClickerObject[]>(starterObjects);
+
+    function clickedCookie(valueToIncrease: number) {
+        setCookieCount(prev => prev + valueToIncrease);
+    }
+
+    function addAutoClicker(){
+        setAutoClickers(prevState => [...prevState, {
+            intervalTime: 1000,
+            nameOfAutoClicker: 'a new AutoClicker',
+            valueToIncrease: 1
+        }]);
+    }
+
+    useEffect(() => {
+        console.log('Saved to localstorage');
+        updateLocalStorage(cookieCount);
+    }, [cookieCount])
+
+    return (
+        <div className="App">
+            <h1>Cookie Clicker</h1>
+            <Cookie onClickFunction={() => clickedCookie(1)}/>
+            <h4>You have: {cookieCount} cookies!!!</h4>
+            {autoClickers.map(clicker => {
+                return <AutoClicker nameOfClicker={clicker.nameOfAutoClicker} intervalTime={clicker.intervalTime}
+                                    onClickFunction={() => clickedCookie(clicker.valueToIncrease)}/>
+            })}
+            <AddAutoClicker addClickerButton={() => addAutoClicker()}/>
+
+
+            <button onClick={() => {setCookieCount(0)}}>Set my cookies to 0</button>
+        </div>
+    );
+};
+
+function updateLocalStorage(newCookies: number) {
+    localStorage.setItem(currentCookieKey, newCookies.toString());
+}
+
+function getFromLocalStorage(): number {
+    const localCookies = localStorage.getItem(currentCookieKey);
+    if (localCookies) {
+        return JSON.parse(localCookies);
+    }
+    return 0;
+}
+
+
+export default App;
