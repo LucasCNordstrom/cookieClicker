@@ -8,7 +8,7 @@ export function getAllClickers(): CurrentlyAcquiredAutoClicker[] {
         currentlyAcquired: 0
     }, {
         name: 'Big Salt Shaker',
-        price: 500,
+        price: 100,
         valueToIncrease: 4,
         currentlyAcquired: 0
     },
@@ -20,12 +20,13 @@ export function getAllClickers(): CurrentlyAcquiredAutoClicker[] {
         }]
 }
 
-
+//This is where we should continue, make the actual fetching 'real'
 export function unlockANewClickerFromDatabase(name: string): CurrentlyAcquiredAutoClicker {
+    console.log('We should now unlock ' + name);
     return {
-        name: 'Unlocked Salt shaker',
-        price: 150,
-        valueToIncrease: 3,
+        name: 'Big Salt Shaker',
+        price: 100,
+        valueToIncrease: 4,
         currentlyAcquired: 0
     }
 }

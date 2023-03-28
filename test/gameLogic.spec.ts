@@ -1,5 +1,5 @@
 import {CurrentlyAcquiredAutoClicker, Unlock} from "../src/types";
-import {reduceNumberToString, unlockNewClicker, updateStateAfterBoughtAutoclicker} from "../src/gameLogic";
+import {reduceNumberToString, tryUnlockNewClicker, updateStateAfterBoughtAutoclicker} from "../src/gameLogic";
 
 describe("updateStateAfterBoughtAutoclicker", () => {
     const oldState: CurrentlyAcquiredAutoClicker[] = [{
@@ -155,7 +155,7 @@ describe('unlocks clickers', function () {
                 currentlyAcquired: 0
             }];
 
-        const updatedState = unlockNewClicker(unlockedClickers, unlock);
+        const updatedState = tryUnlockNewClicker(unlockedClickers, unlock);
         expect(updatedState).toEqual(expectedState);
     });
     it('should unlock a new clicker in another way', function () {

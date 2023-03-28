@@ -57,11 +57,11 @@ export function updateStateAfterBoughtAutoclicker(autoClickers: CurrentlyAcquire
  * @returns The state of the Autoclickers after unlocking a new one
  *
  */
-export function unlockNewClicker(currentState: CurrentlyAcquiredAutoClicker[], unlock: Unlock): CurrentlyAcquiredAutoClicker[] {
+export function tryUnlockNewClicker(currentState: CurrentlyAcquiredAutoClicker[], unlock: Unlock): CurrentlyAcquiredAutoClicker[] {
     let newState: CurrentlyAcquiredAutoClicker[] = currentState;
     const shouldUnlock = currentState.some(clicker =>
         clicker.name === unlock.nameOfRequiredClicker &&
-        clicker.currentlyAcquired === unlock.numberOfClicker);
+        clicker.currentlyAcquired >= unlock.numberOfClicker);
     if (shouldUnlock) {
         const getNewClicker = unlockANewClickerFromDatabase(unlock.clickerToUnlock);
         newState = [...newState, getNewClicker]

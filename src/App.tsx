@@ -2,11 +2,12 @@ import './App.css'
 
 import React, {FC, useEffect, useState} from 'react';
 import {signal, effect} from '@preact/signals-react';
+
 import Clicker from "./components/Clicker";
 import Store from "./components/storeComponents/Store";
 import {CurrentlyAcquiredAutoClicker} from "./types";
 import {getAllClickers} from "./availableClickers";
-import {reduceNumberToString, updateStateAfterBoughtAutoclicker} from "./gameLogic";
+import {reduceNumberToString, tryUnlockNewClicker, updateStateAfterBoughtAutoclicker} from "./gameLogic";
 import {
     getAutoClickersFromLocalstorage,
     getCurrentValueFromLocalStorage,
@@ -15,7 +16,6 @@ import {
 
 
 type App = {}
-
 const currentValue = signal<number>(Number.parseFloat(getCurrentValueFromLocalStorage().toFixed()));
 const saltPerSec = signal<number>(getCurrentValuePerSecFromLocalStorage());
 const currentAutoClickers = signal<CurrentlyAcquiredAutoClicker[]>(getAutoClickersFromLocalstorage());
@@ -38,8 +38,12 @@ const App: FC<App> = () => {
         const newStateOfClickers = updateStateAfterBoughtAutoclicker(currentAutoClickers.value, name);
 
         currentAutoClickers.value = newStateOfClickers;
-        setAutoClickers(currentAutoClickers.value);
         currentValue.value -= price;
+        setAutoClickers(tryUnlockNewClicker(currentAutoClickers.value, {
+            nameOfRequiredClicker: name,
+            clickerToUnlock: 'Unlocked Salt shaker',
+            numberOfClicker: 5
+        }))
     }
 
     function getClickersAvailable() {
@@ -61,7 +65,6 @@ const App: FC<App> = () => {
         })
     }, [autoClickers])
 
-
     return (
         <div className="App">
             <header>
@@ -69,7 +72,7 @@ const App: FC<App> = () => {
             </header>
             <section className={'gameSection'}>
                 <section className={'cookieSection'}>
-                    <h3>Grams of Salt : {currentValue} </h3>
+                    <h3>Grams of Salt : {currentValue as unknown as number} </h3>
                     <Clicker onClickFunction={() => {
                         currentValue.value++;
                     }}/>
