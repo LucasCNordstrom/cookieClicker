@@ -2,17 +2,21 @@
   "name": "cookieClicker",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build  --base /cookieClicker",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages --dist dist"
+    "deploy": "gh-pages --dist dist https://lucascnordstrom.github.io/cookieClicker/",
+    "test": "npx jest"
   },
   "dependencies": {
+    "@preact/signals-react": "^1.2.2",
+    "@types/jest": "^29.5.0",
+    "jest": "^29.5.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "ts-jest": "^29.0.5"
   },
   "devDependencies": {
     "@types/react": "^18.0.28",
