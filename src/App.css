@@ -1,43 +1,64 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 2rem;
 }
 
 
 .title {
-  width: 8em;
-  color: blue;
-}
-.cookieSection {
-  display: grid;
-  text-align: center;
-  width: 25em;
-  border-style: solid;
-  border-color: black;
+    width: 8em;
+    color: blue;
 }
 
+.cookieSection {
+    display: grid;
+    text-align: center;
+    margin: auto;
+    width: 25em;
+    border-style: solid;
+    border-color: black;
+}
 .storeSection {
-  width: 50em;
-  border-style: solid;
-  border-color: black;
+    width: 50em;
+    border-style: solid;
+    border-color: black;
 }
 
 .storeSection h1 {
-  border-style: solid;
-  border-color: black;
-  color: blue;
+    border-style: solid;
+    border-color: black;
+    color: blue;
 }
 
 .cookieButton {
+    width: 300px;
+    height: 100px;
+}
 
+.textSection {
+    display: flex;
+    flex-direction: row;
+    font-size: 20px;
+}
+
+.textSection p {
+    width: 45%;
+}
+
+.gramsText {
+    text-align: right;
+    margin-right: 10px;
+}
+.numberText {
+    text-align: left;
 }
 
 .gameSection {
-  display: flex;
+    display: flex;
 }
+
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+    a:nth-of-type(2) .logo {
+        animation: logo-spin infinite 20s linear;
+    }
 }

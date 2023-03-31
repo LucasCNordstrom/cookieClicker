@@ -72,7 +72,9 @@ const App: FC<App> = () => {
             </header>
             <section className={'gameSection'}>
                 <section className={'cookieSection'}>
-                    <h3>Grams of Salt : {currentValue as unknown as number} </h3>
+                    <section className={'textSection'}>
+                        <p className={'gramsText'}>Grams of Salt</p><p className={'numberText'}>: {currentValue as unknown as number}</p>
+                    </section>
                     <Clicker onClickFunction={() => {
                         currentValue.value++;
                     }}/>
